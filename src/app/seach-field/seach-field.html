@@ -1,0 +1,28 @@
+<!-- src/app/photo-search/photo-search.component.html -->
+  <div class="mx-auto max-w-5xl px-4 py-10">
+    <h1 class="text-2xl font-semibold">Recherche Flickr</h1>
+
+    <div class="mt-6 flex gap-2">
+      <input
+        [(ngModel)]="query"
+        (keydown.enter)="search()"
+        type="text"
+        placeholder="Ex: chat, montagne, sunset..."
+        class="w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-zinc-600"
+      />
+      <button
+        (click)="search()"
+        [disabled]="loading"
+        class="rounded-xl bg-zinc-100 px-4 py-3 font-medium text-zinc-900 disabled:opacity-60"
+      >
+        {{ loading ? '...' : 'Rechercher' }}
+      </button>
+    </div>
+
+    @if (error) {
+      <p class="mt-4 text-sm text-red-400">{{ error }}</p>
+    }
+    @if (loading) {
+      <p class="mt-4 text-sm text-zinc-400">Chargement…</p>
+    }
+  </div>

@@ -1,12 +1,20 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {PhotoViewer} from './photo-viewer/photo-viewer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    PhotoViewer
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('flickr-angular');
+export class App implements OnInit {
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
+
 }
