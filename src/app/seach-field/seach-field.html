@@ -1,28 +1,101 @@
-<!-- src/app/photo-search/photo-search.component.html -->
-  <div class="mx-auto max-w-5xl px-4 py-10">
-    <h1 class="text-2xl font-semibold">Recherche Flickr</h1>
+<div class="mx-auto max-w-5xl px-4 py-10">
+  <h1 class="text-2xl font-semibold">Recherche Flickr</h1>
 
-    <div class="mt-6 flex gap-2">
+  <div class="mt-6 flex gap-2">
+    <input
+      [(ngModel)]="query"
+      (keydown.enter)="search()"
+      type="text"
+      placeholder="Ex: chat, montagne, sunset..."
+      class="w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-zinc-600"
+    />
+    <button
+      (click)="search()"
+      [disabled]="loading"
+      class="rounded-xl bg-zinc-100 px-4 py-3 font-medium text-zinc-900 disabled:opacity-60"
+    >
+      {{ loading ? '...' : 'Rechercher' }}
+    </button>
+  </div>
+
+  <!-- Filtres dates -->
+  <div class="mt-4 grid gap-2 sm:grid-cols-2">
+    <div>
+      <label class="mb-1 block text-sm text-zinc-400">Date minimum</label>
       <input
-        [(ngModel)]="query"
-        (keydown.enter)="search()"
-        type="text"
-        placeholder="Ex: chat, montagne, sunset..."
+        [(ngModel)]="minDate"
+        type="date"
         class="w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-zinc-600"
       />
-      <button
-        (click)="search()"
-        [disabled]="loading"
-        class="rounded-xl bg-zinc-100 px-4 py-3 font-medium text-zinc-900 disabled:opacity-60"
-      >
-        {{ loading ? '...' : 'Rechercher' }}
-      </button>
     </div>
 
-    @if (error) {
-      <p class="mt-4 text-sm text-red-400">{{ error }}</p>
-    }
-    @if (loading) {
-      <p class="mt-4 text-sm text-zinc-400">Chargement…</p>
-    }
+    <div>
+      <label class="mb-1 block text-sm text-zinc-400">Date maximum</label>
+      <input
+        [(ngModel)]="maxDate"
+        type="date"
+        class="w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-zinc-600"
+      />
+    </div>
   </div>
+
+  <div class="mt-4">
+    <label class="mb-1 block text-sm text-zinc-400">Taille d’affichage</label>
+    <select
+      [(ngModel)]="imgSize"
+      class="w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-zinc-600"
+    >
+      <option value="s">Petite</option>
+      <option value="m">Moyenne</option>
+      <option value="l">Grande</option>
+      <option value="o">Original</option>
+    </select>
+  </div>
+
+  <div class="mt-4">
+    <label class="mb-1 block text-sm text-zinc-400">
+      Tags (séparés par des virgules)
+    </label>
+
+    <input
+      type="text"
+      [(ngModel)]="tagInput"
+      placeholder="ex: cat,sunset,-meme"
+      class="w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-zinc-600"
+    />
+
+    <p class="mt-1 text-xs text-zinc-500">
+      Astuce : commence un tag par <code>-</code> pour l’exclure.
+    </p>
+  </div>
+
+
+
+  <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:gap-6">
+    <label class="flex items-center gap-2 text-sm text-zinc-400">
+      <input
+        type="checkbox"
+        [(ngModel)]="allowNsfw"
+        class="accent-zinc-200"
+      />
+      Autoriser le contenu adulte (NSFW)
+    </label>
+
+    <label class="flex items-center gap-2 text-sm text-zinc-400">
+      <input
+        type="checkbox"
+        [(ngModel)]="onlyInGallery"
+        class="accent-zinc-200"
+      />
+      Uniquement les photos en galerie
+    </label>
+  </div>
+
+
+  @if (error) {
+    <p class="mt-4 text-sm text-red-400">{{ error }}</p>
+  }
+  @if (loading) {
+    <p class="mt-4 text-sm text-zinc-400">Chargement…</p>
+  }
+</div>

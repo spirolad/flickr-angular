@@ -6,11 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 
 import {FlickrPhoto, FlickrService} from '../service/flickr.service';
 import {SeachField} from '../seach-field/seach-field';
+import {FlickrDatePipe} from '../pipe/flickr-date-pipe';
+import {PhotoInfo} from '../photo-info/photo-info';
 
 @Component({
   selector: 'app-photo-viewer',
   standalone: true,
-  imports: [CommonModule, SeachField, MatSidenavModule, MatButtonModule],
+  imports: [CommonModule, SeachField, MatSidenavModule, MatButtonModule, PhotoInfo],
   templateUrl: './photo-viewer.html',
 })
 export class PhotoViewer {
@@ -37,7 +39,7 @@ export class PhotoViewer {
     this.drawer.close();
   }
 
-  imgUrl(p: any): string | undefined {
+  imgUrl(p: FlickrPhoto ): string | undefined {
     return this.flickrService.buildPhotoUrl(p);
   }
 

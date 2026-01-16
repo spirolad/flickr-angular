@@ -13,38 +13,11 @@
         mode="side"
         class="drawer-solid w-[380px] bg-zinc-950 text-zinc-100"
       >
-        <div class="h-full">
-          <div class="flex items-start justify-between gap-3 border-b border-zinc-800 p-4">
-            <div class="min-w-0">
-              @if (selected()) {
-                <div class="truncate text-sm font-medium">
-                  {{ selected()!.title || '(sans titre)' }}
-                </div>
-                <div class="mt-1 text-xs text-zinc-400">
-                  <span class="text-zinc-500">Auteur :</span> {{ selected()!.owner }}
-                  <span class="mx-2 text-zinc-600">•</span>
-                  <span class="text-zinc-500">ID :</span> {{ selected()!.id }}
-                </div>
-              } @else {
-                <div class="text-sm text-zinc-400">Clique une image</div>
-              }
-            </div>
+        <app-photo-info
+          [selected]="selected()"
+          (close)="close()"
+        />
 
-            <button mat-button (click)="close()" class="shrink-0">Fermer</button>
-          </div>
-
-          <div class="p-4">
-            @if (selected()) {
-              <div class="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900">
-                <img
-                  [src]="imgUrl(selected()!)"
-                  [alt]="selected()!.title"
-                  class="max-h-[70vh] w-full object-contain"
-                />
-              </div>
-            }
-          </div>
-        </div>
       </mat-drawer>
 
       <mat-drawer-content class="bg-zinc-950">
