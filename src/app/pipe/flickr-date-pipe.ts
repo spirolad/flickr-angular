@@ -6,6 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FlickrDatePipe implements PipeTransform {
 
   transform(value: unknown): string {
+    if (value === null || value === undefined) {
+      return '';
+    }
     const seconds = Number(value);
     if (Number.isNaN(seconds)) {
       return '';

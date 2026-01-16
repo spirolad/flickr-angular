@@ -46,6 +46,7 @@ export class PhotoInfo implements OnChanges {
     if (changes['selected']) {
       this.fetchAuthorPhotos();
       this.fetchComments();
+      this.fetchGeo();
     }
   }
 
@@ -139,10 +140,7 @@ export class PhotoInfo implements OnChanges {
       next: (res) => {
         this.geoLoading = false;
 
-        // pas de géoloc => souvent stat=fail
         if (res.stat === 'fail' || !res.photo?.location) {
-          // on ne met pas ça en "erreur rouge" si tu veux une UX calme :
-          // ici je mets un message doux
           this.geoError = res.message ?? 'Position non disponible.';
           return;
         }
@@ -171,6 +169,4 @@ export class PhotoInfo implements OnChanges {
       }
     });
   }
-
-
 }
